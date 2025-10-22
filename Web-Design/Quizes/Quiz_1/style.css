@@ -1,0 +1,142 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    width: 700px;
+    margin: 25px auto;
+}
+
+.task1 {
+    border: 1px solid black;
+    padding: 30px;
+    border-radius: 20%;
+    border-top-right-radius: 23px 130px;
+    border-bottom-left-radius: 110px 19px;
+    letter-spacing: 2px;
+    line-height: 18px;
+    font-size: 12px;
+}
+
+.task1 h1 {
+    color: red;
+}
+
+.font {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.purple {
+    color: purple;
+    font-size: 30px;
+}
+
+.code {
+    margin-left: 100px;
+    margin-top: 40px;
+}
+
+.left-space {
+    margin-left: 30px;
+}
+
+.task2 {
+    height: 500px;
+    border-collapse: collapse;
+}
+
+.task2 img {
+    width: 150px;
+    margin-left: 40%;
+    border: red 5px solid;
+    padding: 2px;
+}
+
+.link-style {
+    color: blue;
+    text-decoration-line: underline;
+    font-style: italic;
+    text-align: center;
+    font-size: 30px;
+}
+
+.task2 td {
+    border: green 10px solid;
+}
+
+.task3 {
+    border: 1px black solid;
+    height: 200px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.square, .circule, .eclipse, .half-square {
+    border: 5px solid gold;
+    background: purple;
+    width: 130px;
+    height: 100px;
+}
+
+.circule {
+    border-radius: 50%;
+}
+
+.eclipse {
+    border-radius: 40%;
+}
+
+.half-square {
+    border-radius: 20% 0;
+}
+
+.task4 {
+    background: wheat;
+    width: 500px;
+    padding: 10px;
+}
+
+.task4 h1 {
+    color: red;
+}
+
+.green {
+    color: green;
+    font-size: 36px;
+}
+
+.styled-font {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.shapes {
+    background: black;
+    margin: auto;
+    width: 90%;
+    padding: 10px;
+    height: 400px;
+}
+
+.blue-square {
+    width: 150px;
+    height: 150px;
+    background: blue;
+    border-radius: 30px;
+    margin: auto;
+}
+
+.red-circule {
+    width: 150px;
+    height: 150px;
+    background: red;
+    border-radius: 50%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.task5 {
+    
+}
