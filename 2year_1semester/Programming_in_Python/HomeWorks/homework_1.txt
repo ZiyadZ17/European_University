@@ -1,0 +1,67 @@
+1. The user can enter characters on the screen until they type the symbol "!". For each character, print whether it is a vowel or not. 
+
+2. Find all numbers from 1 to 1000 whose sum of all divisors, except itself, is equal to this number.
+
+3. A student enters the number of subjects and the subject scores. Find the highest and lowest scores from the entered scores. Calculate the average and print these values ​​on the screen.
+
+4. Enter the text. Find out if it is a palindrome or not. (A palindrome is text that has the same meaning when read backwards. For example: abba is a palindrome and abc is not.
+
+
+
+
+task1
+
+i = 0
+l = ""
+vowel = "aouieAOUIE"
+while i == 0:
+    letter = input("Enter the letter. Stop it by '!': ")
+    if letter == "!":
+        i = 1
+    else:
+        l += letter
+
+for x in l:
+    if x in vowel:
+        print("'", x, "' is a vowel letter")
+    else:
+        print("'", x, "' is  NOT a vowel letter")
+
+
+task2
+
+for x in range (1, 1000 + 1):
+    div_sum = 0
+    for y in range (1, x):
+        if x % y == 0:
+            div_sum += y
+
+    if div_sum == x:
+        print(x)
+
+
+task3
+
+subj_num = int(input("Enter the number of subjects: "))
+i = 1
+scores = []
+while i <= subj_num:
+    score = int(input("Enter your scores: "))
+    scores.append(score)
+    i += 1
+
+
+print("Highest score: ", max(scores))
+print("Lowest score: ", min(scores))
+print("Average score: ", sum(scores) / len(scores))
+
+
+
+task4
+
+word = input("Enter your palindrome: ")
+
+if word == word[: : -1]:
+    print(word, "is palindrome")
+else:
+    print(word, "is NOT palindrome")
