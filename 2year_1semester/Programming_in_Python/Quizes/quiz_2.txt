@@ -1,0 +1,70 @@
+# task 1
+
+text = input("Enter text: ")
+unique_chars = set()
+exceptions = " .,!?;:-()\"' "
+
+for char in text:
+    if char not in exceptions:
+        unique_chars.add(char)
+
+print("Unique characters:")
+for char in unique_chars:
+    print(char)
+
+
+# task 2
+
+text = input("Enter text: ")
+ch_cnt = {}
+
+for c in text:
+    if c in ch_cnt:
+        ch_cnt[c] += 1
+    else:
+        ch_cnt[c] = 1
+
+repeated_count = 0
+
+for count in ch_cnt.values():
+    if count > 1:
+        repeated_count += 1
+
+print("Number of characters that occur more than once:", repeated_count)
+
+
+# task 3
+
+student_map = {}
+
+while True:
+    name = input("Enter first and last name (or '!' to stop): ")
+    if name == "!":
+        break
+
+    score = float(input("Enter score: "))
+
+    if name in student_map:
+        student_map[name]["total"] += score
+        student_map[name]["count"] += 1
+    else:
+        student_map[name] = {"total": score, "count": 1}
+
+max_avg = -1
+min_avg = 999
+max_student = ""
+min_student = ""
+
+for name, info in student_map.items():
+    avg = info["total"] / info["count"]
+
+    if avg > max_avg:
+        max_avg = avg
+        max_student = name
+
+    if avg < min_avg:
+        min_avg = avg
+        min_student = name
+
+print("Highest average score:", max_student, "with", max_avg)
+print("Lowest average score:", min_student, "with", min_avg)
