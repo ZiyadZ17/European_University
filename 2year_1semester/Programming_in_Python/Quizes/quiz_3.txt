@@ -1,0 +1,740 @@
+#task 1
+
+class Rectangle:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+
+    def is_square(self):
+        return self.width == self.height
+
+    def scale(self, factor):
+        self.width *= factor
+        self.height *= factor
+
+
+class BankAccount:
+    def __init__(self, owner, balance=0.0):
+        self.owner = owner
+        self._balance = balance
+
+    def deposit(self, amount):
+        if amount <= 0:
+            return
+        self._balance += amount
+
+    def withdraw(self, amount):
+        if amount <= 0 or amount > self._balance:
+            return
+        self._balance -= amount
+
+    def get_balance(self):
+        return self._balance
+
+
+class Temperature:
+    def __init__(self, celsius):
+        self.celsius = celsius
+
+    def to_fahrenheit(self):
+        return (self.celsius * 9 / 5) + 32
+
+    @classmethod
+    def from_fahrenheit(cls, f):
+        celsius = (f - 32) * 5 / 9
+        return cls(celsius)
+
+    @staticmethod
+    def is_valid(celsius):
+        return celsius >= -273.15
+
+
+class Vector2D:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other):
+        if isinstance(other, Vector2D):
+            return Vector2D(self.x + other.x, self.y + other.y)
+        return NotImplemented
+
+    def __sub__(self, other):
+        if isinstance(other, Vector2D):
+            return Vector2D(self.x - other.x, self.y - other.y)
+        return NotImplemented
+
+    def __mul__(self, scalar):
+        if isinstance(scalar, (int, float)):
+            return Vector2D(self.x * scalar, self.y * scalar)
+        return NotImplemented
+
+    def __eq__(self, other):
+        if isinstance(other, Vector2D):
+            return self.x == other.x and self.y == other.y
+        return False
+
+    def __str__(self):
+        return f"({self.x}, {self.y})"
+
+    def __repr__(self):
+        return f"Vector2D({self.x}, {self.y})"
+
+
+class StringBuilder:
+    def __init__(self, initial_string=""):
+        self._string = initial_string
+
+    def append(self, text):
+        self._string += text
+        return self
+
+    def upper(self):
+        self._string = self._string.upper()
+        return self
+
+    def reverse(self):
+        self._string = self._string[::-1]
+        return self
+
+    def build(self):
+        return self._string
+
+
+if __name__ == "__main__":
+    v1 = Vector2D(1, 2)
+    v2 = Vector2D(3, 4)
+    v3 = v1 + v2
+    print(v3)
+    print(v1)
+
+    sb = StringBuilder()
+    result = sb.append("hi").upper().build()
+
+
+#task 2
+
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def describe(self):
+        return f"This is an animal named {self.name}."
+
+
+class Dog(Animal):
+    def __init__(self, name, breed):
+        super().__init__(name)
+        self.breed = breed
+
+    def describe(self):
+        return f"This is a dog named {self.name} of breed {self.breed}."
+
+
+class Cat(Animal):
+    def __init__(self, name, indoor):
+        super().__init__(name)
+        self.indoor = indoor
+
+    def describe(self):
+        environment = "indoor" if self.indoor else "outdoor"
+        return f"This is an {environment} cat named {self.name}."
+
+
+class Employee:
+    def __init__(self, name, base_salary):
+        self.name = name
+        self.base_salary = base_salary
+
+    def calculate_pay(self):
+        return self.base_salary
+
+
+class Manager(Employee):
+    def __init__(self, name, base_salary, bonus):
+        super().__init__(name, base_salary)
+        self.bonus = bonus
+
+    def calculate_pay(self):
+        return super().calculate_pay() + self.bonus
+
+
+class Intern(Employee):
+    def __init__(self, name, base_salary, pay_rate_modifier=0.5):
+        super().__init__(name, base_salary)
+        self.pay_rate_modifier = pay_rate_modifier
+
+    def calculate_pay(self):
+        return super().calculate_pay() * self.pay_rate_modifier
+
+
+class Vehicle:
+    def __init__(self, brand, speed):
+        self.brand = brand
+        self.speed = speed
+
+
+class Car(Vehicle):
+    def __init__(self, brand, speed, doors):
+        super().__init__(brand, speed)
+        self.doors = doors
+
+
+class ElectricCar(Car):
+    def __init__(self, brand, speed, doors, battery_capacity):
+        super().__init__(brand, speed, doors)
+        self.battery_capacity = battery_capacity
+
+    def charge(self):
+        return f"Charging the {self.battery_capacity}kWh battery."
+
+
+class Swimmer:
+    def swim(self):
+        return "Swimming"
+
+
+class Flyer:
+    def fly(self):
+        return "Flying"
+
+
+class Duck(Swimmer, Flyer):
+    pass
+
+
+class FlyingFish(Swimmer, Flyer):
+    pass
+
+class LimitedList(list):
+    def __init__(self, max_items, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.max_items = max_items
+        if len(self) > self.max_items:
+            raise ValueError("Initial list exceeds max items allowed")
+
+    def append(self, item):
+        if len(self) >= self.max_items:
+            raise ValueError("List limit reached")
+        super().append(item)
+
+
+if __name__ == "__main__":
+    print(ElectricCar.__mro__)
+
+#task 3
+
+from abc import ABC, abstractmethod
+import math
+
+
+class Shape:
+    def area(self):
+        raise NotImplementedError("Subclasses must implement this method")
+
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return math.pi * (self.radius ** 2)
+
+
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+
+    def area(self):
+        return self.side ** 2
+
+
+class Triangle(Shape):
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
+
+    def area(self):
+        return 0.5 * self.base * self.height
+
+
+class PaymentMethod(ABC):
+    @abstractmethod
+    def pay(self, amount):
+        pass
+
+
+class CreditCard(PaymentMethod):
+    def pay(self, amount):
+        return f"Paid {amount} using Credit Card"
+
+
+class PayPal(PaymentMethod):
+    def pay(self, amount):
+        return f"Paid {amount} using PayPal"
+
+
+class Crypto(PaymentMethod):
+    def pay(self, amount):
+        return f"Paid {amount} using Crypto"
+
+
+class MP3File:
+    def play(self):
+        return "Playing audio from MP3 file"
+
+
+class VideoFile:
+    def play(self):
+        return "Playing video from MP4/MKV file"
+
+
+class Podcast:
+    def play(self):
+        return "Streaming podcast episode"
+
+
+def start(media):
+    return media.play()
+
+
+class Fraction:
+    def __init__(self, numerator, denominator):
+        if denominator == 0:
+            raise ValueError("Denominator cannot be zero")
+        gcd = math.gcd(numerator, denominator)
+        self.numerator = numerator // gcd
+        self.denominator = denominator // gcd
+        if self.denominator < 0:
+            self.numerator = -self.numerator
+            self.denominator = -self.denominator
+
+    def __add__(self, other):
+        if isinstance(other, Fraction):
+            num = self.numerator * other.denominator + other.numerator * self.denominator
+            den = self.denominator * other.denominator
+            return Fraction(num, den)
+        return NotImplemented
+
+    def __mul__(self, other):
+        if isinstance(other, Fraction):
+            num = self.numerator * other.numerator
+            den = self.denominator * other.denominator
+            return Fraction(num, den)
+        return NotImplemented
+
+    def __eq__(self, other):
+        if isinstance(other, Fraction):
+            return self.numerator == other.numerator and self.denominator == other.denominator
+        return False
+
+    def __lt__(self, other):
+        if isinstance(other, Fraction):
+            return self.numerator * other.denominator < other.numerator * self.denominator
+        return NotImplemented
+
+    def __str__(self):
+        return f"{self.numerator}/{self.denominator}"
+
+
+class Calculator:
+    def add(self, *args):
+        if not args:
+            return 0
+        if len(args) == 1 and isinstance(args[0], list):
+            return sum(args[0])
+        return sum(args)
+
+
+if __name__ == "__main__":
+    shapes = [Circle(5), Square(4), Triangle(3, 6)]
+    for shape in shapes:
+        print(shape.area())
+
+    try:
+        pm = PaymentMethod()
+    except TypeError as e:
+        print(f"Cannot instantiate directly: {e}")
+
+    media_list = [MP3File(), VideoFile(), Podcast()]
+    for media in media_list:
+        print(start(media))
+
+
+#task 4
+
+import hashlib
+
+
+class Student:
+    def __init__(self, name, grade):
+        self.name = name
+        self.__grade = 0
+        self.set_grade(grade)
+
+    def get_grade(self):
+        return self.__grade
+
+    def set_grade(self, value):
+        if 0 <= value <= 100:
+            self.__grade = value
+        else:
+            raise ValueError("Grade must be between 0 and 100")
+
+
+# Name Mangling Explanation:
+# Python renames double underscore attributes to '_ClassName__attribute' to prevent accidental
+# overriding in subclasses. It is a convention and not true privacy because the attribute
+# remains fully accessible from outside the class if you use this modified name.
+
+
+class Person:
+    def __init__(self, name, grade):
+        self.name = name
+        self._grade = 0
+        self.grade = grade
+
+    @property
+    def grade(self):
+        return self._grade
+
+    @grade.setter
+    def grade(self, value):
+        if 0 <= value <= 100:
+            self._grade = value
+        else:
+            raise ValueError("Grade must be between 0 and 100")
+
+    @property
+    def letter_grade(self):
+        if self._grade >= 90:
+            return "A"
+        elif self._grade >= 80:
+            return "B"
+        elif self._grade >= 70:
+            return "C"
+        elif self._grade >= 60:
+            return "D"
+        else:
+            return "F"
+
+
+class PasswordManager:
+    def __init__(self):
+        self._password_hash = None
+
+    def __hash(self, password):
+        return hashlib.sha256(password.encode()).hexdigest()
+
+    def set_password(self, password):
+        self._password_hash = self.__hash(password)
+
+    def verify_password(self, password):
+        if self._password_hash is None:
+            return False
+        return self._password_hash == self.__hash(password)
+
+
+class Parent:
+    def __init__(self):
+        self._protected = "Protected Attribute"
+        self.__private = "Private Attribute"
+
+class Child(Parent):
+    def test_access(self):
+        try:
+            protected_val = self._protected
+            print(f"Success: {protected_val}")
+        except AttributeError as e:
+            print(f"Failed to access protected: {e}")
+
+        try:
+            private_val = self.__private
+            print(f"Success: {private_val}")
+        except AttributeError as e:
+            print(f"Failed to access private: {e}")
+
+
+if __name__ == "__main__":
+    student = Student("Alice", 85)
+
+    try:
+        print(student.__grade)
+    except AttributeError as e:
+        print(f"Direct access failed: {e}")
+
+    print(f"Access via mangled name: {student._Student__grade}")
+
+    child = Child()
+    child.test_access()
+
+#task 5
+
+from abc import ABC, abstractmethod
+
+
+class Item:
+    def __init__(self, item_id, title):
+        self.__id = item_id
+        self.title = title
+
+    def get_id(self):
+        return self.__id
+
+    def loan_period(self):
+        raise NotImplementedError
+
+
+class Book(Item):
+    def loan_period(self):
+        return 14
+
+
+class DVD(Item):
+    def loan_period(self):
+        return 3
+
+
+class Magazine(Item):
+    def loan_period(self):
+        return 7
+
+
+class Library:
+    def __init__(self):
+        self.items = {}
+        self.checked_out = {}
+
+    def add_item(self, item):
+        self.items[item.get_id()] = item
+
+    def check_out(self, item_id, member_name):
+        if item_id in self.items and item_id not in self.checked_out:
+            self.checked_out[item_id] = member_name
+            return True
+        return False
+
+    def calculate_late_fee(self, item_id, days_kept, fee_per_day=0.50):
+        if item_id not in self.items:
+            return 0.0
+        allowed = self.items[item_id].loan_period()
+        if days_kept <= allowed:
+            return 0.0
+        return (days_kept - allowed) * fee_per_day
+
+
+class Character(ABC):
+    def __init__(self, name, health):
+        self.name = name
+        self.__health = max(0, health)
+
+    @property
+    def health(self):
+        return self.__health
+
+    @health.setter
+    def health(self, value):
+        self.__health = max(0, value)
+
+    @abstractmethod
+    def attack(self, target):
+        pass
+
+
+class Warrior(Character):
+    def attack(self, target):
+        damage = 15
+        target.health -= damage
+        return f"{self.name} swings sword at {target.name} for {damage} dmg."
+
+
+class Mage(Character):
+    def attack(self, target):
+        damage = 25
+        target.health -= damage
+        return f"{self.name} casts fireball at {target.name} for {damage} dmg."
+
+
+class Archer(Character):
+    def attack(self, target):
+        damage = 10
+        target.health -= damage
+        return f"{self.name} shoots arrow at {target.name} for {damage} dmg."
+
+
+class Device:
+    def __init__(self, name):
+        self.name = name
+        self.__is_on = False
+
+    def turn_on(self):
+        self.__is_on = True
+
+    def turn_off(self):
+        self.__is_on = False
+
+    def status(self):
+        state = "ON" if self.__is_on else "OFF"
+        return f"{self.name} is {state}"
+
+
+class Light(Device):
+    def __init__(self, name, brightness):
+        super().__init__(name)
+        self.brightness = brightness
+
+    def status(self):
+        return f"{super().status()} (Brightness: {self.brightness}%)"
+
+
+class Thermostat(Device):
+    def __init__(self, name, temperature):
+        super().__init__(name)
+        self._temperature = 20
+        self.temperature = temperature
+
+    @property
+    def temperature(self):
+        return self._temperature
+
+    @temperature.setter
+    def temperature(self, value):
+        if 15 <= value <= 30:
+            self._temperature = value
+        else:
+            raise ValueError("Temperature must be between 15 and 30.")
+
+    def status(self):
+        return f"{super().status()} (Target Temp: {self.temperature}°C)"
+
+
+class Speaker(Device):
+    def __init__(self, name, volume):
+        super().__init__(name)
+        self.volume = volume
+
+    def status(self):
+        return f"{super().status()} (Volume: {self.volume}%)"
+
+
+class Home:
+    def __init__(self):
+        self.devices = []
+
+    def add_device(self, device):
+        self.devices.append(device)
+
+    def manage_devices(self):
+        for device in self.devices:
+            device.turn_on()
+            print(device.status())
+
+
+class Product:
+    def __init__(self, name, price):
+        self.name = name
+        if price < 0:
+            raise ValueError("Price cannot be negative.")
+        self.__price = price
+
+    def get_price(self):
+        return self.__price
+
+    def calculate_tax(self):
+        raise NotImplementedError
+
+
+class Electronics(Product):
+    def calculate_tax(self):
+        return self.get_price() * 0.20
+
+
+class Clothing(Product):
+    def calculate_tax(self):
+        return self.get_price() * 0.08
+
+
+class Food(Product):
+    def calculate_tax(self):
+        return 0.0
+
+
+class ShoppingCart:
+    def __init__(self):
+        self.products = []
+
+    def add_product(self, product):
+        self.products.append(product)
+
+    def calculate_total(self):
+        total = 0.0
+        for product in self.products:
+            total += product.get_price() + product.calculate_tax()
+        return total
+
+
+class ShapeRegistry:
+    def __init__(self, shape_id, area_value):
+        self.__id = shape_id
+        self.area_value = area_value
+
+    def area(self):
+        return self.area_value
+
+    def __lt__(self, other):
+        if isinstance(other, ShapeRegistry):
+            return self.area() < other.area()
+        return NotImplemented
+
+    def __str__(self):
+        return f"Shape ID: {self.__id} (Area: {self.area():.2f})"
+
+
+if __name__ == "__main__":
+    import math
+
+    print("--- 5.1 Library System ---")
+    lib = Library()
+    b = Book("B1", "Python Guide")
+    d = DVD("D1", "Sci-Fi Movie")
+    lib.add_item(b)
+    lib.add_item(d)
+    lib.check_out("B1", "John")
+    print(f"Late fee for Book kept 20 days: ${lib.calculate_late_fee('B1', 20)}")
+
+    print("\n--- 5.2 Game Characters ---")
+    party = [Warrior("Thor", 100), Mage("Merlin", 60), Archer("Legolas", 80)]
+    dummy_target = Warrior("Orc", 50)
+    for char in party:
+        print(char.attack(dummy_target))
+    print(f"Target health: {dummy_target.health}")
+
+    print("\n--- 5.3 Smart Home Devices ---")
+    my_home = Home()
+    my_home.add_device(Light("Living Room Light", 75))
+    my_home.add_device(Thermostat("Nest", 22))
+    my_home.add_device(Speaker("Sonos", 40))
+    my_home.manage_devices()
+
+    print("\n--- 5.4 Online Store ---")
+    cart = ShoppingCart()
+    cart.add_product(Electronics("Laptop", 1000))
+    cart.add_product(Clothing("Jacket", 100))
+    cart.add_product(Food("Apple", 5))
+    print(f"Total Cart Price (with tax): ${cart.calculate_total():.2f}")
+
+    print("\n--- 5.5 Shape Registry with Sorting ---")
+    shapes = [
+        ShapeRegistry("C1", math.pi * (5 ** 2)),
+        ShapeRegistry("S1", 4 ** 2),
+        ShapeRegistry("T1", 0.5 * 3 * 6)
+    ]
+    shapes.sort()
+    for shape in shapes:
+        print(shape)
